@@ -83,13 +83,13 @@ function cloud () {
     projectile2 = sprites.createProjectileFromSide(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-. . . . f f f f f f f f f f f . 
-. . . . f . . f f f f f . . . . 
-. . . f . . f . . . f f f f f . 
-. . f f f f f f f f . . . f f . 
-. f f f . f f . . . . . . f f . 
-f f . f f f . . . . . . . . f . 
-f 1 1 1 f 1 1 1 1 1 1 1 1 1 1 1 
+. . . . . f f . . . f f f f f . 
+. . . . f 1 1 f . f 1 1 1 1 1 f 
+. . f f 1 1 1 1 f 1 1 1 1 1 1 f 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
 f f f f f f f f f f f f f f f f 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -98,6 +98,8 @@ f f f f f f f f f f f f f f f f
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 `, -20, 0)
+    projectile2.setPosition(64, 7)
+    projectile2.setFlag(SpriteFlag.BounceOnWall, true)
 }
 function score () {
 	
@@ -122,6 +124,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . . . . . . . . . . . . 
 `, mySprite, 0, -100)
 })
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Projectile, function (sprite, otherSprite) {
+	
+})
 function raindrop () {
 	
 }
@@ -132,25 +137,11 @@ let projectile3: Sprite = null
 let projectile: Sprite = null
 let projectile2: Sprite = null
 let mySprite: Sprite = null
-tiles.setTilemap(tiles.createTilemap(
-            hex`0a0008000102020202020201000001020202020202010000010202020202020100000102020202020201000001020202020202010000010202020202020100000102020202020201000001020202020202010000`,
-            img`
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-. . . . . . . . . . 
-`,
-            [myTiles.tile0,myTiles.tile1,myTiles.tile2],
-            TileScale.Sixteen
-        ))
+ball()
 raindrop()
 hero()
 cloud()
-game.onUpdateInterval(100, function () {
+game.onUpdateInterval(200, function () {
     projectile3 = sprites.createProjectileFromSprite(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -168,7 +159,7 @@ game.onUpdateInterval(100, function () {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-`, projectile2, 0, 100)
+`, projectile2, 0, 50)
     projectile3.y += 3
     projectile3.vx += 3
 })
