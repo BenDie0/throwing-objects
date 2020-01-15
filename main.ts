@@ -108,9 +108,6 @@ f f f f f f f f f f f f f f f f
 function score () {
 	
 }
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
-    game.over(false, effects.dissolve)
-})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     projectile = sprites.createProjectileFromSprite(img`
 . . . . . . . . . . . . . . . . 
@@ -131,13 +128,16 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . . . . . . . . . . . . 
 `, mySprite, 0, -100)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    game.over(false, effects.dissolve)
+})
 function raindrop () {
 	
 }
 function ball () {
 	
 }
-let projectile3: Sprite = null
+let mySprite2: Sprite = null
 let projectile: Sprite = null
 let projectile2: Sprite = null
 let mySprite: Sprite = null
@@ -146,24 +146,24 @@ raindrop()
 hero()
 cloud()
 game.onUpdateInterval(1000, function () {
-    projectile3 = sprites.createProjectileFromSprite(img`
-. . . 5 5 5 5 5 5 5 5 5 5 . . . 
-. . 5 4 4 4 5 5 4 4 4 5 5 5 . . 
-. 5 4 5 4 4 4 5 4 4 4 4 5 4 5 . 
-5 4 4 5 5 4 2 4 4 2 4 2 4 4 5 5 
-5 4 4 4 2 2 2 2 2 2 2 2 4 4 4 5 
-5 4 4 2 2 2 2 2 4 2 2 2 2 4 4 5 
-5 4 2 2 2 4 2 2 4 2 4 2 4 4 5 5 
-5 4 2 2 2 2 2 2 2 2 2 2 4 5 5 5 
-5 4 2 2 4 2 2 2 2 2 2 2 2 2 4 5 
-5 4 2 2 2 2 4 4 2 2 2 2 2 4 4 5 
-5 4 5 4 2 2 2 4 2 2 2 2 4 5 5 5 
-5 4 5 4 4 2 2 2 2 2 2 2 2 5 4 5 
-5 4 4 4 5 4 4 2 2 2 2 2 2 4 4 5 
-. 5 4 5 5 4 4 2 5 4 2 4 2 4 5 . 
-. . 5 5 4 4 5 5 4 5 4 4 2 5 . . 
-. . . 5 5 5 5 5 5 5 5 5 5 . . . 
-`, projectile2, 0, 50)
-    projectile3.y += 3
-    projectile3.vx += 0
+    mySprite2 = sprites.create(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . 3 3 3 3 3 3 . . . 
+. . . . 3 3 3 . . . . . 3 . . . 
+. 3 3 3 . . . . . . . . 3 . . . 
+. 3 . . . . . . . . . 3 . . . . 
+. . . . . . . . . . 3 3 . . . . 
+. . . . . . . . 3 3 . . . . . . 
+. . . . . . . . . 3 3 . . . . . 
+. . . . . . . . . . 3 3 3 3 3 3 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, SpriteKind.Enemy)
+    mySprite2.y += 3
+    mySprite2.vx += 0
 })
