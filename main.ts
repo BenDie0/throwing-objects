@@ -1,3 +1,6 @@
+namespace SpriteKind {
+    export const projectile3 = SpriteKind.create()
+}
 namespace myTiles {
     //% blockIdentity=images._tile
     export const tile0 = img`
@@ -62,14 +65,14 @@ function hero () {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-. . . 7 . . . . . . . . . . 7 . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
+. . . . . . . 2 2 . . . . . . . 
+. . . . . . . 2 2 . . . . . . . 
 . . . . . . . . . . . . . . . . 
-. . . . 7 . . . . . . . . 7 . . 
-. . . . . 7 7 . . . . 7 7 . . . 
-. . . . . . . 7 7 7 7 . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -77,7 +80,8 @@ function hero () {
 . . . . . . . . . . . . . . . . 
 `, SpriteKind.Player)
     mySprite.setPosition(78, 110)
-    controller.moveSprite(mySprite)
+    controller.moveSprite(mySprite, 100, 0)
+    mySprite.setFlag(SpriteFlag.BounceOnWall, true)
 }
 function cloud () {
     projectile2 = sprites.createProjectileFromSide(img`
@@ -97,13 +101,16 @@ f f f f f f f f f f f f f f f f
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-`, -20, 0)
+`, 10, 0)
     projectile2.setPosition(64, 7)
     projectile2.setFlag(SpriteFlag.BounceOnWall, true)
 }
 function score () {
 	
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
+    game.over(false, effects.dissolve)
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     projectile = sprites.createProjectileFromSprite(img`
 . . . . . . . . . . . . . . . . 
@@ -124,9 +131,6 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . . . . . . . . . . . . 
 `, mySprite, 0, -100)
 })
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Projectile, function (sprite, otherSprite) {
-	
-})
 function raindrop () {
 	
 }
@@ -141,25 +145,25 @@ ball()
 raindrop()
 hero()
 cloud()
-game.onUpdateInterval(200, function () {
+game.onUpdateInterval(1000, function () {
     projectile3 = sprites.createProjectileFromSprite(img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . 8 . . . . . . . 8 . . . 8 . 
-. . . . . . 8 . . . . . . . . . 
-. . . . . . . . . . 8 . . . . . 
-. . . . . . . . . . . . . . . . 
-. 8 . . . . 8 . . . . . . . . . 
-. . . . . . . . . . . 8 . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . 8 . . . . 8 . . . . . . 
-. . . . . . . . . . . . . 8 . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
+. . . 5 5 5 5 5 5 5 5 5 5 . . . 
+. . 5 4 4 4 5 5 4 4 4 5 5 5 . . 
+. 5 4 5 4 4 4 5 4 4 4 4 5 4 5 . 
+5 4 4 5 5 4 2 4 4 2 4 2 4 4 5 5 
+5 4 4 4 2 2 2 2 2 2 2 2 4 4 4 5 
+5 4 4 2 2 2 2 2 4 2 2 2 2 4 4 5 
+5 4 2 2 2 4 2 2 4 2 4 2 4 4 5 5 
+5 4 2 2 2 2 2 2 2 2 2 2 4 5 5 5 
+5 4 2 2 4 2 2 2 2 2 2 2 2 2 4 5 
+5 4 2 2 2 2 4 4 2 2 2 2 2 4 4 5 
+5 4 5 4 2 2 2 4 2 2 2 2 4 5 5 5 
+5 4 5 4 4 2 2 2 2 2 2 2 2 5 4 5 
+5 4 4 4 5 4 4 2 2 2 2 2 2 4 4 5 
+. 5 4 5 5 4 4 2 5 4 2 4 2 4 5 . 
+. . 5 5 4 4 5 5 4 5 4 4 2 5 . . 
+. . . 5 5 5 5 5 5 5 5 5 5 . . . 
 `, projectile2, 0, 50)
     projectile3.y += 3
-    projectile3.vx += 3
+    projectile3.vx += 0
 })
