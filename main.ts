@@ -1,5 +1,7 @@
 namespace SpriteKind {
     export const projectile3 = SpriteKind.create()
+    export const ammo = SpriteKind.create()
+    export const poop = SpriteKind.create()
 }
 namespace myTiles {
     //% blockIdentity=images._tile
@@ -60,9 +62,6 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 `
 }
-function whatever () {
-	
-}
 function hero () {
     mySprite = sprites.create(img`
 . . . . . . . . . . . . . . . . 
@@ -107,10 +106,17 @@ f f f f f f f f f f f f f f f f
 `, 10, 0)
     cloud1.setPosition(4, 7)
     cloud1.setFlag(SpriteFlag.BounceOnWall, true)
+    cloud1.setKind(SpriteKind.poop)
 }
 function score () {
 	
 }
+function whatever () {
+	
+}
+sprites.onOverlap(SpriteKind.poop, SpriteKind.ammo, function (sprite, otherSprite) {
+    game.over(true, effects.slash)
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     projectile = sprites.createProjectileFromSprite(img`
 . . . . . . . . . . . . . . . . 
@@ -130,16 +136,14 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 `, mySprite, 0, -100)
+    projectile.setKind(SpriteKind.ammo)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     game.over(false, effects.dissolve)
 })
 function raindrop () {
-	
+    scene.setBackgroundColor(14)
 }
-sprites.onCreated(SpriteKind.Enemy, function (sprite) {
-	
-})
 function ball () {
 	
 }
@@ -153,24 +157,25 @@ raindrop()
 hero()
 cloud()
 game.onUpdateInterval(1000, function () {
-    projectile2 = sprites.create(img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . 3 3 . . . . . . . 
-. . . . . . 3 3 3 . . . . . . . 
-. . . . . . 3 3 3 3 3 . . . . . 
-3 3 3 3 3 3 . 3 . . . 3 3 . . . 
-3 . . . . . 3 3 3 . . . . . . . 
-3 . . . . . 3 . . 3 3 . . . . . 
-3 . . . . 3 . . . . . 3 . . . . 
-. 3 . . . 3 . . . . . 3 3 . . . 
-. . 3 3 . 3 . . . . . 3 3 3 . . 
-. . . . 3 3 3 3 3 3 3 . 3 . . . 
-. . . . . . . . 3 3 3 3 3 . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`, SpriteKind.Enemy)
+    projectile2 = sprites.createProjectileFromSprite(img`
+5 . 5 . . 8 8 8 8 8 8 . 5 . 5 . 
+. 5 . 5 . 5 . 5 . 5 . 5 . 5 . 5 
+5 . . . . . . . . . . . . . 5 . 
+. 5 . . . . . . . . . . . . . 5 
+5 . . . . . . . . . . . . . 5 . 
+. 5 . . . . . . . . . . . . . 5 
+5 . . . . . . . . . . . . . 5 . 
+. 5 . . . . . . . . . . . . . 5 
+5 . . . . . . . . . . . . . 5 . 
+. 5 . . . . . . . . . . . . . 5 
+5 . . . . . . . . . . . . . 5 . 
+. 5 . . . . . . . . . . . . . 5 
+5 . . . . . . . . . . . . . 5 . 
+. . . . . . . . . . . . . . . 5 
+5 . . . 5 . 5 . 5 . 5 . 5 . 5 . 
+. 5 . 5 . 8 8 8 8 8 8 . . 5 . 5 
+`, cloud1, 0, 45)
+    projectile2.setKind(SpriteKind.Enemy)
     projectile2.y += 0
     projectile2.vx += 0
 })
