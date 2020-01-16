@@ -60,6 +60,9 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 `
 }
+function whatever () {
+	
+}
 function hero () {
     mySprite = sprites.create(img`
 . . . . . . . . . . . . . . . . 
@@ -84,7 +87,7 @@ function hero () {
     mySprite.setFlag(SpriteFlag.BounceOnWall, true)
 }
 function cloud () {
-    projectile2 = sprites.createProjectileFromSide(img`
+    cloud1 = sprites.createProjectileFromSide(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . f f . . . f f f f f . 
@@ -102,8 +105,8 @@ f f f f f f f f f f f f f f f f
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 `, 10, 0)
-    projectile2.setPosition(64, 7)
-    projectile2.setFlag(SpriteFlag.BounceOnWall, true)
+    cloud1.setPosition(4, 7)
+    cloud1.setFlag(SpriteFlag.BounceOnWall, true)
 }
 function score () {
 	
@@ -134,36 +137,40 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 function raindrop () {
 	
 }
+sprites.onCreated(SpriteKind.Enemy, function (sprite) {
+	
+})
 function ball () {
 	
 }
-let mySprite2: Sprite = null
-let projectile: Sprite = null
 let projectile2: Sprite = null
+let projectile: Sprite = null
+let cloud1: Sprite = null
 let mySprite: Sprite = null
+whatever()
 ball()
 raindrop()
 hero()
 cloud()
 game.onUpdateInterval(1000, function () {
-    mySprite2 = sprites.create(img`
-. . . . . 5 5 5 5 5 5 . . . . . 
-. . . 5 5 4 5 4 4 4 4 5 5 . . . 
-. . 5 4 4 4 5 4 4 2 4 5 5 5 . . 
-. 5 5 4 2 4 5 5 2 4 2 5 4 4 5 . 
-. 5 5 5 5 4 2 2 2 2 4 2 4 4 5 . 
-5 4 4 4 4 2 4 2 2 2 2 2 2 2 4 5 
-5 4 2 2 2 2 2 2 2 2 2 2 4 2 5 5 
-5 5 4 4 2 4 2 2 2 4 2 2 2 4 4 5 
-5 5 5 5 2 2 2 2 2 2 4 2 2 4 4 5 
-5 4 4 2 2 2 2 4 2 2 2 4 2 5 4 5 
-5 4 4 2 4 4 2 2 2 2 4 4 2 5 5 5 
-. 5 4 4 5 5 4 4 4 2 4 4 4 4 5 . 
-. 5 4 5 5 4 4 5 5 4 2 5 5 5 5 . 
-. . 5 5 4 4 4 4 5 4 4 4 4 5 . . 
-. . . 5 5 4 4 4 5 5 4 5 5 . . . 
-. . . . . 5 5 5 5 5 5 . . . . . 
+    projectile2 = sprites.create(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . 3 3 . . . . . . . 
+. . . . . . 3 3 3 . . . . . . . 
+. . . . . . 3 3 3 3 3 . . . . . 
+3 3 3 3 3 3 . 3 . . . 3 3 . . . 
+3 . . . . . 3 3 3 . . . . . . . 
+3 . . . . . 3 . . 3 3 . . . . . 
+3 . . . . 3 . . . . . 3 . . . . 
+. 3 . . . 3 . . . . . 3 3 . . . 
+. . 3 3 . 3 . . . . . 3 3 3 . . 
+. . . . 3 3 3 3 3 3 3 . 3 . . . 
+. . . . . . . . 3 3 3 3 3 . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
 `, SpriteKind.Enemy)
-    mySprite2.y += 3
-    mySprite2.vx += 0
+    projectile2.y += 0
+    projectile2.vx += 0
 })
