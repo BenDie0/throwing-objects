@@ -62,19 +62,45 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 `
 }
+sprites.onOverlap(SpriteKind.ammo, SpriteKind.poop, function (sprite, otherSprite) {
+    info.changeScoreBy(1)
+})
+function CLOUD_2 () {
+    CLOUD123 = sprites.createProjectileFromSide(img`
+. . . . . . . f f . . . . . . . 
+. . . . . . f 7 7 f . . . . . . 
+. . . . f . f 7 7 f . . . . . . 
+. . . f 7 f f f 7 7 f . . f . . 
+. . . f 7 f f 7 7 7 f . f 7 f . 
+. . . f 7 f f 7 7 7 f f 7 7 f . 
+. . . f 7 f f 7 7 f f 7 7 7 f . 
+. . . f 7 f f 7 7 7 f f f f . . 
+. . . f 7 7 f 7 7 7 f . . . . . 
+. . . f 7 7 f f 7 7 f . . . . . 
+. . . f 7 7 f 7 7 7 f . . . . . 
+. . . . f f f 7 7 7 f . . . . . 
+. . . . . . f 7 7 f f . . . . . 
+. . . . . . f 7 7 7 f . . . . . 
+. . . . . . f 7 7 7 f . . . . . 
+. . . . . . . f f f . . . . . . 
+`, -10, 0)
+    CLOUD123.setPosition(153, 7)
+    CLOUD123.setFlag(SpriteFlag.BounceOnWall, true)
+    CLOUD123.setKind(SpriteKind.poop)
+}
 function hero () {
     mySprite = sprites.create(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . f f f f . . . . . 
 . . . . . f f 5 5 5 5 f f . . . 
 . . . . f 5 5 5 5 5 5 5 5 f . . 
-. . . f 5 5 5 5 5 5 5 5 5 5 f . 
-. . . f 5 f 5 5 5 5 5 5 f 5 f . 
+. . . f 5 f f f 5 5 f f f 5 f . 
+. . . f 5 f f f 5 5 f f f 5 f . 
+. . f 5 5 f f f 5 5 f f f 5 5 f 
 . . f 5 5 5 5 5 5 5 5 5 5 5 5 f 
 . . f 5 5 5 5 5 5 5 5 5 5 5 5 f 
 . . f 5 5 5 5 5 5 5 5 5 5 5 5 f 
-. . f 5 5 5 5 5 5 5 5 5 5 5 5 f 
-. . . f 5 5 5 5 5 5 5 5 5 5 f . 
+. . . f 5 f f f f f f f f 5 f . 
 . . . f 5 5 5 5 5 5 5 5 5 5 f . 
 . . . . f 5 5 5 5 5 5 5 5 f . . 
 . . . . . f f 5 5 5 5 f f . . . 
@@ -117,29 +143,14 @@ function whatever () {
 sprites.onOverlap(SpriteKind.poop, SpriteKind.ammo, function (sprite, otherSprite) {
     game.over(true, effects.slash)
 })
+sprites.onDestroyed(SpriteKind.poop, function (sprite) {
+	
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    projectile = sprites.createProjectileFromSprite(img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . b . . . . . . . . 
-. . . . . . b b b . . . . . . . 
-. . . . . . b b b . . . . . . . 
-. . . . . . b b b . . . . . . . 
-. . . . . . b b b . . . . . . . 
-. . . . . . b b b . . . . . . . 
-. . . . . . b b b . . . . . . . 
-. . . . . . b b b . . . . . . . 
-. . . . . . b b b . . . . . . . 
-. . . . . . b b b . . . . . . . 
-. . . . . . b b b . . . . . . . 
-`, mySprite, 0, -100)
-    projectile.setKind(SpriteKind.ammo)
+	
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    game.over(false, effects.dissolve)
+    game.over(false, effects.melt)
 })
 function raindrop () {
     scene.setBackgroundColor(14)
@@ -147,15 +158,39 @@ function raindrop () {
 function ball () {
 	
 }
+let PROJECTILE5: Sprite = null
 let projectile2: Sprite = null
 let projectile: Sprite = null
 let cloud1: Sprite = null
 let mySprite: Sprite = null
+let CLOUD123: Sprite = null
+CLOUD_2()
 whatever()
 ball()
 raindrop()
 hero()
 cloud()
+game.onUpdateInterval(500, function () {
+    projectile = sprites.createProjectileFromSprite(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . b . . . . . . . 
+. . . . . . . . b . . . . . . . 
+. . . . . . . b b b . . . . . . 
+. . . . . . . b b b . . . . . . 
+. . . . . . b b b b b . . . . . 
+. . . . . . b b b b b . . . . . 
+. . . . . . b b b b b . . . . . 
+. . . . . . b b b b b . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, mySprite, 0, -100)
+    projectile.setKind(SpriteKind.ammo)
+})
 game.onUpdateInterval(1000, function () {
     projectile2 = sprites.createProjectileFromSprite(img`
 . . . . . 5 5 5 5 5 5 . . . . . 
@@ -178,4 +213,27 @@ game.onUpdateInterval(1000, function () {
     projectile2.setKind(SpriteKind.Enemy)
     projectile2.y += 0
     projectile2.vx += 0
+})
+game.onUpdateInterval(1000, function () {
+    PROJECTILE5 = sprites.createProjectileFromSprite(img`
+. . . . . 5 5 5 5 5 5 . . . . . 
+. . . 5 5 5 5 5 5 5 5 5 5 . . . 
+. . 5 5 5 5 4 4 4 4 4 4 5 5 . . 
+. 5 5 5 4 4 2 2 4 4 4 4 4 5 5 . 
+. 5 5 4 4 4 2 5 2 2 4 5 4 4 5 . 
+5 5 5 4 5 2 2 4 2 2 4 2 4 4 5 5 
+5 5 4 4 2 2 2 2 2 2 2 2 2 4 5 5 
+5 5 4 4 4 2 2 4 2 2 4 2 2 5 4 5 
+5 5 4 4 2 2 2 2 2 2 2 2 4 5 4 5 
+5 5 4 5 4 2 2 2 2 2 2 4 4 4 4 5 
+5 5 5 4 5 4 2 2 4 4 2 2 4 4 4 5 
+. 5 5 4 4 4 4 5 4 4 4 4 4 4 5 . 
+. 5 5 5 4 4 5 4 4 5 5 4 4 5 5 . 
+. . 5 5 5 4 4 4 4 4 4 5 5 5 . . 
+. . . 5 5 5 5 5 5 5 5 5 5 . . . 
+. . . . . 5 5 5 5 5 5 . . . . . 
+`, CLOUD123, 0, 45)
+    PROJECTILE5.setKind(SpriteKind.Enemy)
+    PROJECTILE5.y += 0
+    PROJECTILE5.vx += 0
 })
