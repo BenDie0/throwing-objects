@@ -65,29 +65,6 @@ namespace myTiles {
 sprites.onOverlap(SpriteKind.ammo, SpriteKind.poop, function (sprite, otherSprite) {
     info.changeScoreBy(1)
 })
-function CLOUD_2 () {
-    CLOUD123 = sprites.createProjectileFromSide(img`
-. . . . . . . f f . . . . . . . 
-. . . . . . f 7 7 f . . . . . . 
-. . . . f . f 7 7 f . . . . . . 
-. . . f 7 f f f 7 7 f . . f . . 
-. . . f 7 f f 7 7 7 f . f 7 f . 
-. . . f 7 f f 7 7 7 f f 7 7 f . 
-. . . f 7 f f 7 7 f f 7 7 7 f . 
-. . . f 7 f f 7 7 7 f f f f . . 
-. . . f 7 7 f 7 7 7 f . . . . . 
-. . . f 7 7 f f 7 7 f . . . . . 
-. . . f 7 7 f 7 7 7 f . . . . . 
-. . . . f f f 7 7 7 f . . . . . 
-. . . . . . f 7 7 f f . . . . . 
-. . . . . . f 7 7 7 f . . . . . 
-. . . . . . f 7 7 7 f . . . . . 
-. . . . . . . f f f . . . . . . 
-`, -10, 0)
-    CLOUD123.setPosition(153, 7)
-    CLOUD123.setFlag(SpriteFlag.BounceOnWall, true)
-    CLOUD123.setKind(SpriteKind.poop)
-}
 function hero () {
     mySprite = sprites.create(img`
 . . . . . . . . . . . . . . . . 
@@ -141,7 +118,7 @@ function whatever () {
 	
 }
 sprites.onOverlap(SpriteKind.poop, SpriteKind.ammo, function (sprite, otherSprite) {
-    game.over(true, effects.slash)
+	
 })
 sprites.onDestroyed(SpriteKind.poop, function (sprite) {
 	
@@ -149,6 +126,29 @@ sprites.onDestroyed(SpriteKind.poop, function (sprite) {
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 	
 })
+function CLOUD_2 () {
+    CLOUD123 = sprites.createProjectileFromSide(img`
+. . . . . . . f f . . . . . . . 
+. . . . . . f 7 7 f . . . . . . 
+. . . . f . f 7 7 f . . . . . . 
+. . . f 7 f f f 7 7 f . . f . . 
+. . . f 7 f f 7 7 7 f . f 7 f . 
+. . . f 7 f f 7 7 7 f f 7 7 f . 
+. . . f 7 f f 7 7 f f 7 7 7 f . 
+. . . f 7 f f 7 7 7 f f f f . . 
+. . . f 7 7 f 7 7 7 f . . . . . 
+. . . f 7 7 f f 7 7 f . . . . . 
+. . . f 7 7 f 7 7 7 f . . . . . 
+. . . . f f f 7 7 7 f . . . . . 
+. . . . . . f 7 7 f f . . . . . 
+. . . . . . f 7 7 7 f . . . . . 
+. . . . . . f 7 7 7 f . . . . . 
+. . . . . . . f f f . . . . . . 
+`, -10, 0)
+    CLOUD123.setPosition(153, 7)
+    CLOUD123.setFlag(SpriteFlag.BounceOnWall, true)
+    CLOUD123.setKind(SpriteKind.poop)
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     game.over(false, effects.melt)
 })
@@ -161,9 +161,9 @@ function ball () {
 let PROJECTILE5: Sprite = null
 let projectile2: Sprite = null
 let projectile: Sprite = null
+let CLOUD123: Sprite = null
 let cloud1: Sprite = null
 let mySprite: Sprite = null
-let CLOUD123: Sprite = null
 CLOUD_2()
 whatever()
 ball()
